@@ -1,19 +1,20 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const moment = require('moment');
+
+const PORT = process.env.PORT || 5000;
+const members = require('./members.js')
 
 // Define middleware
 const logger = (req, resp, next) => {
-  console.log("Logger Middleware")
-  console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}`)
-  next
+  console.log(`${moment().format()}: ${req.protocol}://${req.get('host')}${req.originalUrl}`)
+  next()
 }
 
 // Init logger middleware
 app.use(logger);
 
-const PORT = process.env.PORT || 5000;
-const members = require('./members.js')
 
 // Set a static folder
 // app.use(express.static(path.join(__dirname, 'public')));
