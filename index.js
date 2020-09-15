@@ -2,12 +2,18 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+// Define middleware
+const logger = (req, resp, next) => {
+  console.log("Logger Middleware")
+  console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}`)
+  next
+}
+
+// Init logger middleware
+app.use(logger);
+
 const PORT = process.env.PORT || 5000;
-const members = [
-  { "id": 1, "name": "John", "email": "john@example.com", "status": "active" },
-  { "id": 2, "name": "Bob", "email": "bob@example.com", "status": "inactive" },
-  { "id": 3, "name": "Sue", "email": "sue@example.com", "status": "active" }
-];
+const members = require('./members.js')
 
 // Set a static folder
 // app.use(express.static(path.join(__dirname, 'public')));
